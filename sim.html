@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <title>CPEX</title>
+        <script type="importmap">
+            {
+                "imports": {
+                    "three": "https://cdn.jsdelivr.net/npm/three@v0.149.0/build/three.module.js",
+                    "three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.149.0/examples/jsm/"
+                }
+            }
+        </script>
+        <script type="module" src="./molecule/molecule.js"></script>
+        <script src="./molecule/values.js"></script>
+        <link rel="stylesheet" href="style/visualizer.css"></link>
+    </head>
+    <body>
+
+
+        <button  id="exportBtn">Export <span style='font-size: 20px'>⚛️</span></button>
+        <script type="module" src="./visualizer/moleculeTo3D.js"></script>
+        <script type="module" src="./index.js"></script>
+        <div id="sideBar"></div>
+        <div id="extensionBar"></div>
+        <div class="custom-slider-container">
+          <div class="slider-scale" id="sliderScale">Scale: 1.00x</div>
+
+          <input
+            type="range"
+            id="simulationScaleSlider"
+            class="custom-range-input"
+            min="0.1"
+            max="3.0"
+            step="0.05"
+            value="1.0"
+          />
+        </div>
+
+    </body>
+</html>

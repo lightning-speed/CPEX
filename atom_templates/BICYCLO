@@ -1,0 +1,59 @@
+import { addAtom, traverseAtom } from "./visualizer/moleculeTo3D.js";
+import Molecule from "./molecule/molecule.js";
+import Atom from "./molecule/atom.js";
+
+// 1. Initialize the molecule with Bridgehead Carbon 1 (Top)
+const molecule = new Molecule(new Atom(6, 0x00ff00));
+const c1 = molecule.principalAtom;
+
+// 2. Instantiate Bridgehead Carbon 2 (Bottom)
+const c2 = new Atom(6, 0x00ff00);
+
+// 3. Instantiate the 6 bridge carbons (3 bridges × 2 carbons each)
+const b1_a = new Atom(6, 0x00ff00); // Bridge 1, atom A
+const b1_b = new Atom(6, 0x00ff00); // Bridge 1, atom B
+
+const b2_a = new Atom(6, 0x00ff00); // Bridge 2, atom A
+const b2_b = new Atom(6, 0x00ff00); // Bridge 2, atom B
+
+const b3_a = new Atom(6, 0x00ff00); // Bridge 3, atom A
+const b3_b = new Atom(6, 0x00ff00); // Bridge 3, atom B
+
+// 4. Attach Hydrogens (Bridgeheads get 1 H, Bridge carbons get 2 H's)
+c1.createBond(new Atom(1, 0x0000ff), 1);
+c2.createBond(new Atom(1, 0x0000ff), 1);
+
+b1_a.createBond(new Atom(1, 0x0000ff), 1);
+b1_a.createBond(new Atom(1, 0x0000ff), 1);
+b1_b.createBond(new Atom(1, 0x0000ff), 1);
+b1_b.createBond(new Atom(1, 0x0000ff), 1);
+
+b2_a.createBond(new Atom(1, 0x0000ff), 1);
+b2_a.createBond(new Atom(1, 0x0000ff), 1);
+b2_b.createBond(new Atom(1, 0x0000ff), 1);
+b2_b.createBond(new Atom(1, 0x0000ff), 1);
+
+b3_a.createBond(new Atom(1, 0x0000ff), 1);
+b3_a.createBond(new Atom(1, 0x0000ff), 1);
+b3_b.createBond(new Atom(1, 0x0000ff), 1);
+b3_b.createBond(new Atom(1, 0x0000ff), 1);
+
+// 5. Connect the Carbon-Carbon framework
+
+// Bridge 1: c1 -> b1_a -> b1_b -> c2
+c1.createBond(b1_a, 1);
+b1_a.createBond(b1_b, 1);
+b1_b.createBond(c2, 1);
+
+// Bridge 2: c1 -> b2_a -> b2_b -> c2
+c1.createBond(b2_a, 1);
+b2_a.createBond(b2_b, 1);
+b2_b.createBond(c2, 1);
+
+// Bridge 3: c1 -> b3_a -> b3_b -> c2
+c1.createBond(b3_a, 1);
+b3_a.createBond(b3_b, 1);
+b3_b.createBond(c2, 1);
+
+// 6. Run the physics visualization
+traverseAtom(c1);

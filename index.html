@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CPEX — Molecule Library</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                background: #efeae0;
+                color: #241e17;
+                font-family: "Inter", system-ui, sans-serif;
+                -webkit-font-smoothing: antialiased;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
+            .app-frame {
+                max-width: 1440px;
+                height: calc(100vh - (2 * 34px));
+                min-height: 520px;
+                margin: 34px auto;
+                background: #fffcf6;
+                border-radius: 28px;
+                overflow: hidden;
+                box-shadow:
+                    0 1px 2px rgba(36, 30, 23, 0.06),
+                    0 8px 24px rgba(36, 30, 23, 0.08),
+                    0 34px 55px -21px rgba(36, 30, 23, 0.18);
+                border: 1px solid rgba(36, 30, 23, 0.06);
+                display: flex;
+                flex-direction: column;
+            }
+
+            header.top {
+                min-height: 76px;
+                background: linear-gradient(135deg, #ffe9c4, #ffd9a0 130%);
+                padding: 21px 55px;
+                display: flex;
+                align-items: center;
+                gap: 13px;
+                border-bottom: 1px solid rgba(36, 30, 23, 0.06);
+                flex-shrink: 0; 
+            }
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 13px;
+            }
+            .brand-mark {
+                width: 44px;
+                height: 44px;
+                border-radius: 12px;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #fff;
+                box-shadow:
+                    0 2px 6px rgba(36, 30, 23, 0.15),
+                    inset 0 0 0 1px rgba(36, 30, 23, 0.06);
+                flex-shrink: 0;
+            }
+            .brand-mark img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .brand-name {
+                font-family: "Space Grotesk", sans-serif;
+                font-weight: 700;
+                font-size: 2.09375rem;
+                color: #e5501a;
+                letter-spacing: -0.01em;
+            }
+            .brand-sub {
+                font-size: 0.75rem;
+                color: #8c7e6b;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                margin-top: -2px;
+                font-weight: 600;
+            }
+
+            .layout {
+                display: grid;
+                grid-template-columns: 61.8fr 38.2fr;
+                flex: 1 1 auto; 
+                min-height: 340px; 
+            }
+            @media (max-width: 880px) {
+                .layout {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            .list-pane {
+                height: 100%;
+                min-height: 340px;
+                padding: 34px 55px;
+                display: flex;
+                flex-direction: column;
+                gap: 21px;
+                overflow: hidden; 
+            }
+            .list-pane-head {
+                display: flex;
+                align-items: baseline;
+                justify-content: space-between;
+                margin-bottom: 13px;
+                flex-shrink: 0;
+            }
+            .list-pane-head h2 {
+                font-family: "Space Grotesk", sans-serif;
+                font-size: 1.05rem;
+                font-weight: 600;
+                margin: 0;
+                color: #241e17;
+            }
+            .list-pane-head span {
+                font-size: 0.8rem;
+                color: #8c7e6b;
+            }
+            #molecule-list {
+                flex: 1 1 auto;
+                min-height: 140px;
+                overflow-y: auto; 
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 21px;
+                padding-right: 8px;
+                margin-right: calc(8px * -1);
+            }
+
+            /* MOLECULE CARD */
+            .m-card {
+                min-height: 89px; 
+                background: linear-gradient(180deg, #ffd9a0, #ffc988 150%);
+                border-radius: 18px;
+                padding: 13px 21px;
+                display: flex;
+                align-items: center;
+                gap: 21px;
+                box-shadow:
+                    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+                    0 6px 14px -6px rgba(229, 80, 26, 0.35),
+                    0 2px 4px rgba(36, 30, 23, 0.06);
+                border: 1px solid rgba(255, 255, 255, 0.35);
+                transition:
+                    transform 0.18s ease,
+                    box-shadow 0.18s ease;
+                cursor: pointer;
+                position: relative;
+            }
+            .m-card:hover,
+            .m-card:focus-within {
+                transform: translateY(-2px);
+                box-shadow:
+                    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+                    0 10px 22px -8px rgba(229, 80, 26, 0.45),
+                    0 3px 6px rgba(36, 30, 23, 0.08);
+            }
+            .m-card.is-active {
+                outline: 2px solid #4a55c7;
+                outline-offset: 2px;
+            }
+
+            .m-thumb {
+                width: 55px;
+                height: 55px;
+                flex-shrink: 0;
+                clip-path: polygon(
+                    25% 6%,
+                    75% 6%,
+                    100% 50%,
+                    75% 94%,
+                    25% 94%,
+                    0% 50%
+                );
+                background: #fff3de;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: inset 0 0 0 1px rgba(36, 30, 23, 0.1);
+                overflow: hidden;
+            }
+            .m-thumb img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .m-thumb .fallback-atom {
+                font-size: 22px;
+            }
+
+            .m-info {
+                flex: 1 1 auto;
+                min-width: 0;
+                background: rgba(255, 251, 240, 0.6);
+                border-radius: 12px;
+                padding: 8px 13px;
+            }
+            .m-name {
+                font-family: "Space Grotesk", sans-serif;
+                font-weight: 600;
+                font-size: 1.2925rem;
+                color: #241e17;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .m-formula {
+                font-family: "JetBrains Mono", monospace;
+                font-size: 0.8125rem;
+                color: #8c7e6b; 
+                margin-top: 2px;
+                letter-spacing: 0.02em;
+            }
+            .m-formula sub {
+                font-size: 0.85em;
+            }
+
+            .m-actions {
+                display: flex;
+                gap: 8px;
+                flex-shrink: 0;
+            }
+            .btn {
+                border: none;
+                border-radius: 10px;
+                font-family: "Inter", sans-serif;
+                font-weight: 600;
+                font-size: 0.8rem;
+                padding: 10px 16px;
+                cursor: pointer;
+                white-space: nowrap;
+                transition:
+                    transform 0.12s ease,
+                    box-shadow 0.12s ease,
+                    background 0.12s ease;
+            }
+            .btn:active {
+                transform: translateY(1px);
+            }
+            .btn-sim {
+                background: rgb(0, 150, 255);
+                color: #fff;
+                box-shadow: 0 4px 10px -3px rgba(74, 85, 199, 0.55);
+            }
+            .btn-sim:hover {
+                background: #383f9e;
+            }
+            .btn-export {
+                background: #fff;
+                color: #241e17;
+                box-shadow:
+                    0 2px 6px rgba(36, 30, 23, 0.12),
+                    inset 0 0 0 1px rgba(36, 30, 23, 0.08);
+            }
+            .btn-export:hover {
+                background: #fffaf0;
+            }
+
+            .empty-state {
+                border: 1.5px dashed rgba(36, 30, 23, 0.18);
+                border-radius: 18px;
+                padding: 55px 21px;
+                text-align: center;
+                color: #8c7e6b;
+                font-size: 0.9rem;
+            }
+
+            .add-form {
+                flex-shrink: 0;
+                min-height: 76px;
+                margin-top: 13px;
+                background: rgba(255, 255, 255, 0.55);
+                border-radius: 18px;
+                padding: 21px;
+                display: grid;
+                grid-template-columns: 1.618fr 1fr auto;
+                gap: 13px;
+                align-items: end;
+                box-shadow: inset 0 0 0 1px rgba(36, 30, 23, 0.06);
+            }
+            .add-form label {
+                display: block;
+                font-size: 0.7rem;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                color: #8c7e6b;
+                margin-bottom: 6px;
+                font-weight: 600;
+            }
+            .add-form input {
+                width: 100%;
+                padding: 10px 12px;
+                border-radius: 10px;
+                border: 1px solid rgba(36, 30, 23, 0.15);
+                font-family: "Inter", sans-serif;
+                font-size: 0.9rem;
+                background: #fff;
+            }
+            .add-form input:focus {
+                outline: 2px solid #4a55c7;
+                outline-offset: 1px;
+            }
+            .add-form .btn-add {
+                background: #ff6a2e;
+                color: #fff;
+                box-shadow: 0 4px 10px -3px rgba(255, 106, 46, 0.55);
+                padding: 10px 21px;
+            }
+            .add-form .btn-add:hover {
+                background: #e5501a;
+            }
+            @media (max-width: 640px) {
+                .add-form {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            /* GOLDEN RATIO 38.2 FOR GOO UI */
+            .side-pane {
+                height: 100%;
+                min-height: 340px; 
+                background: linear-gradient(180deg, #fdfbf3, #fbf6e6);
+                border-left: 1px solid rgba(36, 30, 23, 0.06);
+                padding: 34px 34px;
+                display: flex;
+                flex-direction: column;
+                gap: 21px;
+                overflow-y: auto;
+            }
+            .side-eyebrow {
+                font-size: 0.7rem;
+                text-transform: uppercase;
+                letter-spacing: 0.14em;
+                color: #8c7e6b;
+                font-weight: 700;
+            }
+            .preview-card {
+                min-height: 200px;
+                background: #fff;
+                border-radius: 18px;
+                padding: 21px;
+                box-shadow:
+                    0 8px 21px -13px rgba(36, 30, 23, 0.35),
+                    inset 0 0 0 1px rgba(36, 30, 23, 0.06);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 13px;
+            }
+            .preview-img {
+                width: 100%;
+                aspect-ratio: 1.618 / 1; /* golden HERE */
+                border-radius: 12px;
+                background: linear-gradient(135deg, #ffebcb, #ffd9a0);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                box-shadow: inset 0 0 0 1px rgba(36, 30, 23, 0.08);
+            }
+            .preview-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .preview-name {
+                font-family: "Space Grotesk", sans-serif;
+                font-weight: 600;
+                font-size: 1.1rem;
+            }
+            .preview-formula {
+                font-family: "JetBrains Mono", monospace;
+                color: #8c7e6b;
+                font-size: 0.9rem;
+            }
+            .side-note {
+                font-size: 0.82rem;
+                color: #8c7e6b;
+                line-height: 1.5;
+            }
+            .side-divider {
+                height: 1px;
+                background: rgba(36, 30, 23, 0.08);
+                margin: 8px 0;
+            }
+            .stat-row {
+                display: flex;
+                justify-content: space-between;
+                font-size: 0.85rem;
+                padding: 8px 0;
+                border-bottom: 1px solid rgba(36, 30, 23, 0.06);
+            }
+            .stat-row span:first-child {
+                color: #8c7e6b;
+            }
+            .stat-row span:last-child {
+                font-weight: 600;
+                font-family: "JetBrains Mono", monospace;
+            }
+
+            ::selection {
+                background: #ff6a2e;
+                color: #fff;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="app-frame">
+            <header class="top">
+                <div class="brand">
+                    <div class="brand-mark">
+                        <img
+                            src="img1"
+                            alt="CPEX logo"
+                            onerror="
+                                this.style.display = 'none';
+                                this.parentElement.innerHTML = '⬡';
+                            "
+                        />
+                    </div>
+                    <div>
+                        <div class="brand-name">CPEX</div>
+                        <div class="brand-sub">Molecule Simulation Library</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="layout">
+                <div class="list-pane">
+                    <div class="list-pane-head">
+                        <h2>Molecules</h2>
+                        <span id="count-label">0 entries</span>
+                    </div>
+
+                    <div id="molecule-list"><!-- CARDS HERE --></div>
+
+                    <div class="add-form">
+                        <div>
+                            <label for="in-name">Molecule name</label>
+                            <input
+                                id="in-name"
+                                type="text"
+                                placeholder="e.g. Ethanol"
+                            />
+                        </div>
+                        <div>
+                            <label for="in-formula">Formula</label>
+                            <input
+                                id="in-formula"
+                                type="text"
+                                placeholder="e.g. C2H6O"
+                            />
+                        </div>
+                        <button
+                            class="btn btn-add"
+                            onclick="handleAddFromForm()"
+                        >
+                            + Add block
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SIDE PANE -->
+                <div class="side-pane">
+                    <div class="side-eyebrow">Preview</div>
+                    <div class="preview-card" id="preview-card">
+                        <div class="preview-img">
+                            <img
+                                id="preview-img"
+                                src="img2"
+                                alt="molecule preview"
+                                onerror="this.style.display = 'none'"
+                            />
+                        </div>
+                        <div class="preview-name" id="preview-name">
+                            Select a molecule
+                        </div>
+                        <div class="preview-formula" id="preview-formula">
+                            —
+                        </div>
+                    </div>
+
+                    <div class="side-divider"></div>
+
+                    <div class="side-eyebrow">Molecule Stats</div>
+                    <div class="stat-row">
+                        <span>Pre-Simulated</span><span id="stat">0</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Name</span><span id="prevName">—</span>
+                    </div>
+
+                    <div class="side-note">Bring me Thanos!</div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+          
+
+            let molecules = [];
+            let idCounter = 0;
+            let activeId = null;
+
+            const listEl = document.getElementById("molecule-list");
+            const countLabel = document.getElementById("count-label");
+            const statTotal = document.getElementById("stat-total");
+            const statLast = document.getElementById("stat-last");
+
+         
+            function formatFormula(formula) {
+                return String(formula).replace(
+                    /([A-Za-z\)\]])(\d+)/g,
+                    "$1<sub>$2</sub>",
+                );
+            }
+
+            
+            function addMoleculeBlock(opts) {
+                const mol = {
+                    id: "m" + ++idCounter,
+                    name: opts.name || "Untitled molecule",
+                    formula: opts.formula || "",
+                    img: opts.img || "img2",
+                    simUrl: opts.simUrl || "#",
+                    preSimulated: opts.preSimulated,
+                };
+                molecules.push(mol);
+                renderList();
+                setPreview(mol.id);
+
+                return mol.id;
+            }
+
+            /** Remove a molecule block by id. */
+            function removeMoleculeBlock(id) {
+                molecules = molecules.filter((m) => m.id !== id);
+                if (activeId === id) {
+                    activeId = null;
+                }
+                renderList();
+            }
+
+            function renderList() {
+                listEl.innerHTML = "";
+
+                if (molecules.length === 0) {
+                    listEl.innerHTML =
+                        '<div class="empty-state">No molecules yet — add one below, or call <code>addMoleculeBlock()</code>.</div>';
+                } else {
+                    molecules.forEach((mol) => {
+                        const card = document.createElement("div");
+                        card.className =
+                            "m-card" +
+                            (mol.id === activeId ? " is-active" : "");
+                        card.tabIndex = 0;
+                        card.dataset.id = mol.id;
+                        card.innerHTML = `
+        <div class="m-thumb">
+          <img src="${mol.img}" alt="${mol.name} structure" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\\'fallback-atom\\'>⬡</span>'">
+        </div>
+        <div class="m-info">
+          <div class="m-name">${mol.name}</div>
+          <div class="m-formula">${formatFormula(mol.formula) || "&mdash;"}</div>
+        </div>
+        <div class="m-actions">
+          <button class="btn btn-sim">View Simulation</button>
+          <button class="btn btn-export">Export JSON</button>
+        </div>
+      `;
+                        card.addEventListener("click", (e) => {
+                            if (e.target.closest(".btn")) return;
+                            setPreview(mol.id);
+                        });
+                        card.querySelector(".btn-sim").addEventListener(
+                            "click",
+                            (e) => {
+                                e.stopPropagation();
+                                viewSimulation(mol.id);
+                            },
+                        );
+                        card.querySelector(".btn-export").addEventListener(
+                            "click",
+                            (e) => {
+                                e.stopPropagation();
+                                exportJSON(mol.id);
+                            },
+                        );
+                        listEl.appendChild(card);
+                        mol.element = card;
+                        mol.element.onclick = () => {
+                            console.log(mol.preSimulated);
+                            stat.textContent = mol.preSimulated
+                                ? "true"
+                                : "false";
+                            prevName.innerHTML = mol.name;
+                        };
+                    });
+                }
+
+                countLabel.textContent =
+                    molecules.length +
+                    (molecules.length === 1 ? " entry" : " entries");
+            }
+
+            //UPDATE PREVIEW
+            function setPreview(id) {
+                const mol = molecules.find((m) => m.id === id);
+                if (!mol) return;
+                activeId = id;
+                document.getElementById("preview-name").textContent = mol.name;
+                document.getElementById("preview-formula").innerHTML =
+                    formatFormula(mol.formula) || "—";
+                const img = document.getElementById("preview-img");
+                img.style.display = "";
+                img.src = mol.img;
+
+                listEl.querySelectorAll(".m-card").forEach((card) => {
+                    card.classList.toggle("is-active", card.dataset.id === id);
+                });
+            }
+
+            function viewSimulation(id) {
+                const mol = molecules.find((m) => m.id === id);
+                if (!mol) return;
+                setPreview(id);
+                if (mol.simUrl && mol.simUrl !== "#") {
+                    window.open(mol.simUrl, "_blank");
+                } else {
+                    console.log(
+                        "View Simulation:",
+                        mol.name,
+                        "(no simUrl configured)",
+                    );
+                }
+            }
+
+            function exportJSON(id) {
+                const mol = molecules.find((m) => m.id === id);
+                if (!mol) return;
+                const blob = new Blob([JSON.stringify(mol, null, 2)], {
+                    type: "application/json",
+                });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download =
+                    mol.name.replace(/\s+/g, "_").toLowerCase() + ".json";
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                URL.revokeObjectURL(url);
+            }
+
+            function handleAddFromForm() {
+                const nameInput = document.getElementById("in-name");
+                const formulaInput = document.getElementById("in-formula");
+                const name = nameInput.value.trim();
+                const formula = formulaInput.value.trim();
+                if (!name) {
+                    nameInput.focus();
+                    return;
+                }
+                const id = addMoleculeBlock({ name, formula, img: "img2" });
+                nameInput.value = "";
+                formulaInput.value = "";
+                setPreview(id);
+            }
+
+            document
+                .getElementById("in-formula")
+                .addEventListener("keydown", (e) => {
+                    if (e.key === "Enter") handleAddFromForm();
+                });
+            document
+                .getElementById("in-name")
+                .addEventListener("keydown", (e) => {
+                    if (e.key === "Enter")
+                        document.getElementById("in-formula").focus();
+                });
+
+            addMoleculeBlock({
+                name: "Neo Pentane",
+                formula: "C5H12",
+                img: "img2",
+                simUrl: window.location.origin + "/sim.html?moleculeId=" + "np",
+                preSimulated: false,
+            });
+            addMoleculeBlock({
+                name: "Cyclohexane",
+                formula: "C5H12",
+                img: "img2",
+                simUrl:
+                    window.location.origin + "/sim.html?moleculeId=" + "c6h12",
+                preSimulated: true,
+            });
+            setPreview(molecules[0].id);
+            molecules[0].element.click();
+        </script>
+    </body>
+</html>

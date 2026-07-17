@@ -1,0 +1,40 @@
+{
+  "atomsData": [
+    { "atomId": 0, "atomicNumber": 6 },
+    { "atomId": 1, "atomicNumber": 6 },
+    { "atomId": 2, "atomicNumber": 6 },
+    { "atomId": 3, "atomicNumber": 6 },
+    { "atomId": 4, "atomicNumber": 6 },
+    { "atomId": 5, "atomicNumber": 1 },
+    { "atomId": 6, "atomicNumber": 1 },
+    { "atomId": 7, "atomicNumber": 1 },
+    { "atomId": 8, "atomicNumber": 1 },
+    { "atomId": 9, "atomicNumber": 1 },
+    { "atomId": 10, "atomicNumber": 1 },
+    { "atomId": 11, "atomicNumber": 1 },
+    { "atomId": 12, "atomicNumber": 1 },
+    { "atomId": 13, "atomicNumber": 1 },
+    { "atomId": 14, "atomicNumber": 1 },
+    { "atomId": 15, "atomicNumber": 1 },
+    { "atomId": 16, "atomicNumber": 1 }
+  ],
+  "bondsData": [
+    { "AB": [0, 1], "order": 1 },
+    { "AB": [0, 2], "order": 1 },
+    { "AB": [0, 3], "order": 1 },
+    { "AB": [0, 4], "order": 1 },
+    { "AB": [1, 5], "order": 1 },
+    { "AB": [1, 6], "order": 1 },
+    { "AB": [1, 7], "order": 1 },
+    { "AB": [2, 8], "order": 1 },
+    { "AB": [2, 9], "order": 1 },
+    { "AB": [2, 10], "order": 1 },
+    { "AB": [3, 11], "order": 1 },
+    { "AB": [3, 12], "order": 1 },
+    { "AB": [3, 13], "order": 1 },
+    { "AB": [4, 14], "order": 1 },
+    { "AB": [4, 15], "order": 1 },
+    { "AB": [4, 16], "order": 1 }
+  ],
+  "equilibriumAttained": false
+}

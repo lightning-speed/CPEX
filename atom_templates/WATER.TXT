@@ -1,0 +1,17 @@
+import { addAtom, traverseAtom, atoms } from "./visualizer/moleculeTo3D.js";
+import Molecule from "./molecule/molecule.js";
+import Atom from "./molecule/atom.js";
+
+const molecule = new Molecule(new Atom(8, 0xff0000));
+molecule.principalAtom.createLonePair();
+molecule.principalAtom.createLonePair();
+
+// 2. Attach the two Hydrogen atoms (Mass 1, Blue) to the central Oxygen
+molecule.principalAtom.createBond(new Atom(1, 0x0000ff), 1);
+molecule.principalAtom.createBond(new Atom(1, 0x0000ff), 1);
+
+traverseAtom(molecule.principalAtom);
+window.CA = atoms;
+
+//EXPECTED: B.A 104.5 deg
+// EXPECTED B.L 96 pm

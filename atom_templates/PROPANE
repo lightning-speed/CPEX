@@ -1,0 +1,31 @@
+import { addAtom, traverseAtom, atoms,initalizeSidePanel } from "./visualizer/moleculeTo3D.js";
+import Molecule from "./molecule/molecule.js";
+import Atom from "./molecule/atom.js";
+
+// Create first Carbon atom (mass 12, gray color)
+const molecule = new Molecule(new Atom(6, 0x888888));
+
+// Create second Carbon and bond it to the first Carbon
+const carbon2 = new Atom(6, 0x888888);
+const carbon3 = new Atom(6, 0x888888);
+
+molecule.principalAtom.createBond(carbon2, 1);
+carbon2.createBond(carbon3, 1);
+
+// Attach 3 Hydrogens to first Carbon
+molecule.principalAtom.createBond(new Atom(1, 0x0000ff), 1);
+molecule.principalAtom.createBond(new Atom(1, 0x0000ff), 1);
+molecule.principalAtom.createBond(new Atom(1, 0x0000ff), 1);
+
+// Attach 3 Hydrogens to second Carbon
+carbon2.createBond(new Atom(1, 0x0000ff), 1);
+carbon2.createBond(new Atom(1, 0x0000ff), 1);
+
+carbon3.createBond(new Atom(1, 0x0000ff), 1);
+carbon3.createBond(new Atom(1, 0x0000ff), 1);
+carbon3.createBond(new Atom(1, 0x0000ff), 1);
+
+// Traverse and visualize
+traverseAtom(molecule.principalAtom);
+window.CA = atoms;
+initalizeSidePanel();
