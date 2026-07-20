@@ -64,7 +64,7 @@ async function start() {
   window.CA = Atom.getAllAtoms();
   initalizeSidePanel();
   ExtensionBar.init();
-  ExtensionBar.addExtensionBoxToView({name:"SASA (Water)", description:"Finds Solvent Accessible Surface Area for Water"})
+  ExtensionBar.addExtensionBoxToView({name:"SASA (Water)", description:"Finds Solvent Accessible Surface Area for Water", func: VolumeCalculator.runExtension})
   initalizeEventListeners();
   Terminal.printColor("green", "[Done]")
 

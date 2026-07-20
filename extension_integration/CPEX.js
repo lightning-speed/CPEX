@@ -32,7 +32,6 @@ import Atom from "../molecule/atom.js";
 import Bond from "../molecule/bond.js";
 import FileToMolecule from "../io/fileToMolecule.js";
 
-
 class CPEX {
 
   static ON_MOLECULE_LOADED = "moleculeLoaded";

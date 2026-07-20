@@ -4,8 +4,10 @@ class ExtensionBar {
   static init() {
     this.extensionBar = document.getElementById("extensionBar")
     document.body.appendChild(this.extensionBar);
+    this.extensionsData = [];
   }
   static addExtensionBoxToView(extensionData) {
+    this.extensionsData.push(extensionData);
     const extensionBox = document.createElement('div');
     //REUSING SOME CSS CLASSES HERE
     extensionBox.innerHTML = `<br>
@@ -21,7 +23,12 @@ class ExtensionBar {
       </div>
     </div>`
     this.extensionBar.appendChild(extensionBox);
+    this.extensionBar.querySelector('.use-btn').onclick = () => this.runExtension(this.extensionsData.length - 1);
 
+  }
+  static runExtension(index) {
+    const extensionData = this.extensionsData[index];
+    extensionData.func();
   }
 }
 

@@ -2,6 +2,8 @@
 // This module imports CPEX from your extension integration
 
 import CPEX from "../extension_integration/CPEX.js";
+import Terminal from "../extension_integration/terminal.js";
+
 
 class VolumeCalculator {
     /**
@@ -15,6 +17,18 @@ class VolumeCalculator {
      * @param {number} padding - Padding around molecule in meters (default: 2e-10)
      * @returns {Object} Volume results, including both molecularVolume and solventAccessibleVolume
      */
+
+    static runExtension() {
+      const obj = VolumeCalculator.calculateMolecularVolume()
+      Terminal.println()
+      Terminal.println()
+
+      Terminal.println("SASA (Water) Extension.  Author: Some shitty AI")
+      Terminal.print("Solvent Accessible Volume (Angstrong cube): ");
+      Terminal.printColor('blue', obj.solventAccessibleVolumeA3)
+      Terminal.println()
+    }
+
     static calculateMolecularVolume(probeRadius = 1.4e-10, numPoints = 100000, padding = 2e-10) {
         // Get atoms from CPEX
         const atoms = CPEX.getAtoms();
