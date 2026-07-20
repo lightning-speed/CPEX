@@ -14,13 +14,14 @@
         <link rel="stylesheet" href="style/visualizer.css"></link>
     </head>
     <body>
-
-
         <button  id="exportBtn">Export <span style='font-size: 20px'>⚛️</span></button>
         <script type="module" src="./visualizer/moleculeTo3D.js"></script>
         <script type="module" src="./index.js"></script>
         <div id="sideBar"></div>
-        <div id="extensionBar"></div>
+        <div id="extensionBar">
+            <p style="font-weight:bold">Extensions</p>
+            <input type="search" id="searchBar" placeholder="Search Extensions" class="search-bar" />
+        </div>
         <div class="custom-slider-container">
           <div class="slider-scale" id="sliderScale">Scale: 1.00x</div>
 
@@ -34,6 +35,11 @@
             value="1.0"
           />
         </div>
+        <div class="terminal-container">
+            <div class="terminal-header">Terminal 🖥️</div>
 
+            <div id="terminal">
+            </div>
+        </div>
     </body>
 </html>

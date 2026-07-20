@@ -17,7 +17,7 @@ const mouse = new THREE.Vector2();
 const raycaster = new THREE.Raycaster();
 const scene = new THREE.Scene();
 const allowedWidth = window.innerWidth - 350;
-const allowedHeight = window.innerHeight;
+const allowedHeight = window.innerHeight - TERMINAL_HEIGHT;
 
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -162,7 +162,6 @@ function rotateCameraTo(t) {
 function isEquilibriumAttained() {
   return !FindingEquilibrium;
 }
-
 function initalizeEventListeners() {
   document.getElementById("exportBtn").addEventListener("click", () => {
     const jsonD = MoleculeToFile.convertToJson();

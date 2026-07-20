@@ -52,7 +52,7 @@
                 align-items: center;
                 gap: 13px;
                 border-bottom: 1px solid rgba(36, 30, 23, 0.06);
-                flex-shrink: 0; 
+                flex-shrink: 0;
             }
             .brand {
                 display: flex;
@@ -97,8 +97,8 @@
             .layout {
                 display: grid;
                 grid-template-columns: 61.8fr 38.2fr;
-                flex: 1 1 auto; 
-                min-height: 340px; 
+                flex: 1 1 auto;
+                min-height: 340px;
             }
             @media (max-width: 880px) {
                 .layout {
@@ -113,7 +113,7 @@
                 display: flex;
                 flex-direction: column;
                 gap: 21px;
-                overflow: hidden; 
+                overflow: hidden;
             }
             .list-pane-head {
                 display: flex;
@@ -136,7 +136,7 @@
             #molecule-list {
                 flex: 1 1 auto;
                 min-height: 140px;
-                overflow-y: auto; 
+                overflow-y: auto;
                 padding: 10px;
                 display: flex;
                 flex-direction: column;
@@ -147,7 +147,7 @@
 
             /* MOLECULE CARD */
             .m-card {
-                min-height: 89px; 
+                min-height: 89px;
                 background: linear-gradient(180deg, #ffd9a0, #ffc988 150%);
                 border-radius: 18px;
                 padding: 13px 21px;
@@ -225,7 +225,7 @@
             .m-formula {
                 font-family: "JetBrains Mono", monospace;
                 font-size: 0.8125rem;
-                color: #8c7e6b; 
+                color: #8c7e6b;
                 margin-top: 2px;
                 letter-spacing: 0.02em;
             }
@@ -336,7 +336,7 @@
             /* GOLDEN RATIO 38.2 FOR GOO UI */
             .side-pane {
                 height: 100%;
-                min-height: 340px; 
+                min-height: 340px;
                 background: linear-gradient(180deg, #fdfbf3, #fbf6e6);
                 border-left: 1px solid rgba(36, 30, 23, 0.06);
                 padding: 34px 34px;
@@ -425,7 +425,7 @@
     </head>
     <body>
         <div class="app-frame">
-            <header class="top">
+            <header cla=+ss="top">
                 <div class="brand">
                     <div class="brand-mark">
                         <img
@@ -515,7 +515,7 @@
         </div>
 
         <script>
-          
+
 
             let molecules = [];
             let idCounter = 0;
@@ -526,7 +526,7 @@
             const statTotal = document.getElementById("stat-total");
             const statLast = document.getElementById("stat-last");
 
-         
+
             function formatFormula(formula) {
                 return String(formula).replace(
                     /([A-Za-z\)\]])(\d+)/g,
@@ -534,7 +534,7 @@
                 );
             }
 
-            
+
             function addMoleculeBlock(opts) {
                 const mol = {
                     id: "m" + ++idCounter,

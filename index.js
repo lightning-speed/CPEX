@@ -9,6 +9,8 @@ import Atom from "./molecule/atom.js";
 import FileToMolecule from "../io/fileToMolecule.js";
 import CPEX from "./extension_integration/CPEX.js";
 import VolumeCalculator from "./ex_test/VolumeCalculator.js";
+import ExtensionBar from "./extension_integration/extensionBar.js";
+import Terminal from "./extension_integration/terminal.js";
 
 async function start() {
   const link = window.location.href;
@@ -55,10 +57,17 @@ async function start() {
 
   // 6. Traverse the graph to visualize
   traverseMolecule(molecule);*/
+  Terminal.init();
+
+  Terminal.print("Loading CPEX: ")
   traverseMolecule(await FileToMolecule.json("./json/" + moleculeId + ".json"));
   window.CA = Atom.getAllAtoms();
   initalizeSidePanel();
+  ExtensionBar.init();
+  ExtensionBar.addExtensionBoxToView({name:"SASA (Water)", description:"Finds Solvent Accessible Surface Area for Water"})
   initalizeEventListeners();
+  Terminal.printColor("green", "[Done]")
+
 }
 start();
 

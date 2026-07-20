@@ -82,7 +82,7 @@ class Atom {
       atomicNumber: this.atomicNumber,
       position: this.position,
       color: this.color,
-    
+
     };
   }
   resetVectors() {
@@ -99,6 +99,10 @@ class Atom {
       this.cardContainerElement.querySelector(".atom-header").click();
     }
   }
+  getAtomId() {
+    return Atoms.indexOf(this);
+  }
+
   static applyRepulsionForces(atoms) {
     if (isEquilibriumAttained()) return;
 
@@ -144,7 +148,6 @@ class Atom {
   static getHeatOfAtomizationSum() {
     return heatOfAtomizationSum;
   }
-
   static calculateStericEnergy() {
     let energy = 0;
 
@@ -162,9 +165,7 @@ class Atom {
   static getAllAtoms() {
     return Atoms;
   }
-  getAtomId() {
-    return Atoms.indexOf(this);
-  }
+
 
 }
 export default Atom;

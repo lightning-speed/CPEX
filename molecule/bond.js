@@ -108,7 +108,6 @@ class Bond {
 
     //console.log(forceMag);
   }
-
   getBondInfo() {
     return {
       connectingAtoms: [this.atom1, this.atom2],
