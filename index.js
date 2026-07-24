@@ -6,7 +6,7 @@ import {
 } from "./visualizer/moleculeTo3D.js";
 import Molecule from "./molecule/molecule.js";
 import Atom from "./molecule/atom.js";
-import FileToMolecule from "../io/fileToMolecule.js";
+import FileToMolecule from "./io/fileToMolecule.js";
 import CPEX from "./extension_integration/CPEX.js";
 import ExtensionBar from "./extension_integration/extensionBar.js";
 import Terminal from "./extension_integration/terminal.js";
