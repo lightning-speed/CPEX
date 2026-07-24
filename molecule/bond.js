@@ -60,7 +60,7 @@ class Bond {
       (PICO *
         (atom1Info.bondLength_pm +
           atom2Info.bondLength_pm -
-          25 *
+          44 *
             Math.pow(
               Math.abs(
                 atom1Info.electroNegativity_pauling -

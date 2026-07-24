@@ -448,7 +448,7 @@
             </header>
 
             <div class="layout">
-                <div class="list-pane">
+                <div class="list-pane" >
                     <div class="list-pane-head">
                         <h2>Molecules</h2>
                         <span id="count-label">0 entries</span>
@@ -456,7 +456,7 @@
 
                     <div id="molecule-list"><!-- CARDS HERE --></div>
 
-                    <div class="add-form">
+                    <div class="add-form"  style="display: none;">
                         <div>
                             <label for="in-name">Molecule name</label>
                             <input
@@ -713,7 +713,15 @@
                 formula: "C5H12",
                 img: "img2",
                 simUrl:
-                    window.location.origin + "/sim.html?moleculeId=" + "c6h12",
+                    window.location.origin + "/sim.html?moleculeId=" + "c6h12pc",
+                preSimulated: true,
+            });
+            addMoleculeBlock({
+                name: "Methane",
+                formula: "CH4",
+                img: "img2",
+                simUrl:
+                    window.location.origin + "/sim.html?moleculeId=" + "ch4",
                 preSimulated: true,
             });
             setPreview(molecules[0].id);

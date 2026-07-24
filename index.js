@@ -8,7 +8,6 @@ import Molecule from "./molecule/molecule.js";
 import Atom from "./molecule/atom.js";
 import FileToMolecule from "../io/fileToMolecule.js";
 import CPEX from "./extension_integration/CPEX.js";
-import VolumeCalculator from "./ex_test/VolumeCalculator.js";
 import ExtensionBar from "./extension_integration/extensionBar.js";
 import Terminal from "./extension_integration/terminal.js";
 
@@ -60,18 +59,28 @@ async function start() {
   Terminal.init();
 
   Terminal.print("Loading CPEX: ")
-  traverseMolecule(await FileToMolecule.json("./json/" + moleculeId + ".json"));
-  window.CA = Atom.getAllAtoms();
-  initalizeSidePanel();
-  ExtensionBar.init();
-  ExtensionBar.addExtensionBoxToView({name:"SASA (Water)", description:"Finds Solvent Accessible Surface Area for Water", func: VolumeCalculator.runExtension})
-  initalizeEventListeners();
-  Terminal.printColor("green", "[Done]")
+  try {
+    traverseMolecule(await FileToMolecule.json("./json/" + moleculeId + ".json"));
+    window.CA = Atom.getAllAtoms();
+    initalizeSidePanel();
+    ExtensionBar.init();
+    await ExtensionBar.addExtensionBoxToView({ name: "Benson Group Enthalpy Calculator", description: "Estimates ΔHf° (298K, gas) using BENSON GROUP ADDITIVITY:", filePath: "../ex_test/BensonGroup.js" })
+    await ExtensionBar.addExtensionBoxToView({ name: "SAV (Water)", description: "Finds Solvent Accessible Volume for Water", filePath: "../ex_test/VolumeCalculator.js" })
+    await ExtensionBar.addExtensionBoxToView({ name: "Inertia Calculator", description: "Moment of Inertia & Rotational Constants Extension", filePath: "../ex_test/InertiaCalculator.js" })
+    initalizeEventListeners();
+    Terminal.printColor("green", "[Done]")
+  } catch (e) {
+    Terminal.printColor("red", "[Failed]")
+    Terminal.println()
 
+    Terminal.print(e.message)
+  }
+  Terminal.println()
+console.log(CPEX.getAtoms().length);
 }
 start();
 
 CPEX.addHandler(CPEX.ON_EQUILIBRIUM_ATTAINED, () => {
-  const volume = VolumeCalculator.calculateMolecularVolume();
-  console.log("Volume:", volume);
+  Terminal.print("Equilibrium Attained")
+
 })

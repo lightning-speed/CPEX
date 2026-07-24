@@ -4,13 +4,15 @@ class ExtensionBar {
   static init() {
     this.extensionBar = document.getElementById("extensionBar")
     document.body.appendChild(this.extensionBar);
+    this.extensionBar.appendChild(document.createElement('br'))
+    this.extensionBar.appendChild(document.createElement('br'))
+
     this.extensionsData = [];
   }
-  static addExtensionBoxToView(extensionData) {
-    this.extensionsData.push(extensionData);
+  static async addExtensionBoxToView(extensionData) {
     const extensionBox = document.createElement('div');
     //REUSING SOME CSS CLASSES HERE
-    extensionBox.innerHTML = `<br>
+    extensionBox.innerHTML = `
       <div class="atom-card"  style="border:1px solid ">
         <div class="extension-header" >
           <div class="atom-meta">
@@ -22,11 +24,20 @@ class ExtensionBar {
           <button class="use-btn">Use</button>
       </div>
     </div>`
+    const Ext = await import(extensionData.filePath)
+    extensionData.func = Ext.default.runExtension
+    const v = this.extensionsData.length
+    extensionBox.querySelector('.use-btn').onclick = () => this.runExtension(v);
+
+    this.extensionsData.push(extensionData)
     this.extensionBar.appendChild(extensionBox);
-    this.extensionBar.querySelector('.use-btn').onclick = () => this.runExtension(this.extensionsData.length - 1);
+
+
+
 
   }
   static runExtension(index) {
+    console.log(index)
     const extensionData = this.extensionsData[index];
     extensionData.func();
   }

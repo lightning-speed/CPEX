@@ -1,0 +1,16 @@
+{
+  "atomsData": [
+    { "atomId": 0, "atomicNumber": 6 },
+    { "atomId": 1, "atomicNumber": 1 },
+    { "atomId": 2, "atomicNumber": 1 },
+    { "atomId": 3, "atomicNumber": 1 },
+    { "atomId": 4, "atomicNumber": 1 }
+  ],
+  "bondsData": [
+    { "AB": [0, 1], "order": 1 },
+    { "AB": [0, 2], "order": 1 },
+    { "AB": [0, 3], "order": 1 },
+    { "AB": [0, 4], "order": 1 }
+  ],
+  "equilibriumAttained": false
+}
