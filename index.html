@@ -711,7 +711,7 @@
                 name: "Neo Pentane",
                 formula: "C5H12",
                 img: "img2",
-                simUrl: window.location.origin + "/sim.html?moleculeId=" + "np",
+                simUrl:makeSimUrl("np"),
                 preSimulated: false,
             });
             addMoleculeBlock({
@@ -719,7 +719,7 @@
                 formula: "C5H12",
                 img: "img2",
                 simUrl:
-                    window.location.origin + "/sim.html?moleculeId=" + "c6h12pc",
+                   makeSimUrl("c6h12pc"),
                 preSimulated: true,
             });
             addMoleculeBlock({
@@ -727,7 +727,7 @@
                 formula: "CH4",
                 img: "img2",
                 simUrl:
-                    window.location.origin + "/sim.html?moleculeId=" + "ch4",
+                     makeSimUrl("ch4"),
                 preSimulated: true,
             });
             setPreview(molecules[0].id);
