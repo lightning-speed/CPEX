@@ -3,7 +3,7 @@ import Bond from "../molecule/bond.js";
 
 import * as THREE from "three";
 import { initializeAtomDetails } from "./sideBar.js";
-import MoleculeToFile from "../io/moleculeToFile.js";
+import MoleculeToFile from "./io/moleculeToFile.js";
 import CPEX from "../extension_integration/CPEX.js";
 
 let rotatingLeft = true;
