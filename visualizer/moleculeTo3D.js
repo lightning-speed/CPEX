@@ -12,6 +12,7 @@ let rotatingRight = false;
 let cameraXZAngle = 0;
 let phyIterations = 0;
 let FindingEquilibrium = true;
+let moleculeLoadingComplete = false;
 
 const mouse = new THREE.Vector2();
 const raycaster = new THREE.Raycaster();
@@ -29,14 +30,17 @@ window.camera = camera;
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(allowedWidth, allowedHeight);
 
-setTimeout(() => {
+function startRendering() {
   renderer.setAnimationLoop(animate);
-}, 100);
+}
 document.body.appendChild(renderer.domElement);
 
 camera.position.z = 5;
-function traverseMolecule(molecule) {
+async function traverseMolecule(molecule) {
   traverseAtom(molecule.principalAtom);
+  moleculeLoadingComplete = true;
+  startRendering()
+  CPEX.launchHandlers(CPEX.ON_MOLECULE_LOADED, {});
 }
 function traverseAtom(atom) {
   if (atom.isTraversed) return;
@@ -146,10 +150,10 @@ function animate(time) {
 function stopRendering() {
   rendering = false;
   renderer.setAnimationLoop(null);
+
 }
 function initalizeSidePanel() {
   initializeAtomDetails(Atom.getAllAtoms());
-
   setInterval(() => initializeAtomDetails(Atom.getAllAtoms()), 2000);
 }
 function rotateCameraTo(t) {

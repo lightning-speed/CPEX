@@ -60,9 +60,7 @@ async function start() {
 
   Terminal.print("Loading CPEX: ")
   try {
-    traverseMolecule(await FileToMolecule.json("./json/" + moleculeId + ".json"));
-    window.CA = Atom.getAllAtoms();
-    initalizeSidePanel();
+    await traverseMolecule(await FileToMolecule.json("./json/" + moleculeId + ".json"));
     ExtensionBar.init();
     await ExtensionBar.addExtensionBoxToView({ name: "Benson Group Enthalpy Calculator", description: "Estimates ΔHf° (298K, gas) using BENSON GROUP ADDITIVITY:", filePath: "../ex_test/BensonGroup.js" })
     await ExtensionBar.addExtensionBoxToView({ name: "SAV (Water)", description: "Finds Solvent Accessible Volume for Water", filePath: "../ex_test/VolumeCalculator.js" })
@@ -82,5 +80,8 @@ start();
 
 CPEX.addHandler(CPEX.ON_EQUILIBRIUM_ATTAINED, () => {
   Terminal.print("Equilibrium Attained")
-
+})
+CPEX.addHandler(CPEX.ON_MOLECULE_LOADED, () => {
+  window.CA = Atom.getAllAtoms();
+  initalizeSidePanel();
 })
