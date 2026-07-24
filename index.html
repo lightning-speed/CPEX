@@ -590,6 +590,7 @@
           <button class="btn btn-export">Export JSON</button>
         </div>
       `;
+
                         card.addEventListener("click", (e) => {
                             if (e.target.closest(".btn")) return;
                             setPreview(mol.id);
@@ -688,7 +689,12 @@
                 formulaInput.value = "";
                 setPreview(id);
             }
-
+            function makeSimUrl(chemKey){
+              if(window.location.hostname.includes("localhost"))
+                return window.location.origin + "/sim.html?moleculeId=" + chemKey;
+              else
+                return window.location.href+"sim.html?moleculeId=" + chemKey
+            }
             document
                 .getElementById("in-formula")
                 .addEventListener("keydown", (e) => {
